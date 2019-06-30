@@ -162,11 +162,6 @@ class SysTestMon():
                                 self.print_output(output, last_scan_timestamp)
                             # for i in range(len(output)):
                             #    self.logger.info(output[i])
-                        else:
-                            self.logger.info(
-                                "No occurences of {0} keyword found on {1}".format(
-                                    keyword,
-                                    node))
                         total_occurences += occurences
 
                     keyword_counts[key] = total_occurences
@@ -263,7 +258,6 @@ class SysTestMon():
             time.sleep(self.scan_interval)
 
     def print_output(self, output, last_scan_timestamp):
-        self.logger.info(last_scan_timestamp)
         for line in output:
             match = re.search(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}', line)
             if match:
