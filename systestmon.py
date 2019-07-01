@@ -96,6 +96,8 @@ class SysTestMon():
     # 3. SSH to those nodes, grep for specified keywords in specified files
     # 4. Reporting
 
+    ignore_list = ["Port exited with status 0"]
+
     def run(self):
         # Logging configuration
         self.logger = logging.getLogger("systestmon")
@@ -262,10 +264,16 @@ class SysTestMon():
             match = re.search(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}', line)
             if match:
                 timestamp_in_log = datetime.strptime(match.group(), '%Y-%m-%dT%H:%M:%S')
-                if timestamp_in_log >= last_scan_timestamp:
+                if timestamp_in_log >= last_scan_timestamp and self.check_op_in_ignorelist(line):
                     self.logger.info(line)
             else:
                 self.logger.info(line)
+
+    def check_op_in_ignorelist(self, line):
+        for ignore_text in self.ignore_list:
+            if line.contains(ignore_text):
+                return False
+        return True
 
     def get_services_map(self, master, rest_username, rest_password):
         cluster_url = "http://" + master + ":8091/pools/default"
