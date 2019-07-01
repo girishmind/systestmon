@@ -271,7 +271,7 @@ class SysTestMon():
 
     def check_op_in_ignorelist(self, line):
         for ignore_text in self.ignore_list:
-            if line.contains(ignore_text):
+            if ignore_text in line:
                 return False
         return True
 
