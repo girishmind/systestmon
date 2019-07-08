@@ -96,7 +96,7 @@ class SysTestMon():
     # 3. SSH to those nodes, grep for specified keywords in specified files
     # 4. Reporting
 
-    ignore_list = ["Port exited with status 0"]
+    ignore_list = ["Port exited with status 0", "Fatal:false"]
 
     def run(self):
         # Logging configuration
